@@ -15,21 +15,24 @@ class Mobile extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          backgroundColor: backGroundColor,
-          title: const Text(
-            'HA Tunnel Plus'
+          backgroundColor: appBarColor,
+          title: Text(
+            'HA Tunnel Plus',
+            style: TextStyle(
+              color: iconColor.withOpacity(0.8),
+            ),
           ),
           actions: [
             IconButton(
               onPressed: (){}, 
               icon: const Icon(Icons.settings),
-              color: iconColor.withOpacity(0.6),
+              color: iconColor.withOpacity(0.8),
             ),
     
             IconButton(
               onPressed: (){}, 
               icon: const Icon(Icons.more_vert),
-              color: iconColor.withOpacity(0.6),
+              color: iconColor.withOpacity(0.8),
             ),
           ],
           
@@ -52,7 +55,7 @@ class Mobile extends StatelessWidget {
           ),
         ),
         drawer: Drawer(
-          backgroundColor: backGroundColor,
+          backgroundColor: appBarColor,
           child: ListView(
             children: [
               const DrawerHeader(
