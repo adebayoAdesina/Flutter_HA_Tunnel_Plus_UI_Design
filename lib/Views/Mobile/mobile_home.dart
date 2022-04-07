@@ -10,6 +10,8 @@ class MobileHome extends StatefulWidget {
 }
 
 class _MobileHomeState extends State<MobileHome> {
+  bool _isSwitchedOn = false;
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +25,7 @@ class _MobileHomeState extends State<MobileHome> {
                 Row(
                   children: [
                     Expanded(
-                      flex: 8,
+                      flex: 7,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -68,7 +70,7 @@ class _MobileHomeState extends State<MobileHome> {
                       ),
                     ),
                     Expanded(
-                      flex: 4,
+                      flex: 5,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -94,7 +96,7 @@ class _MobileHomeState extends State<MobileHome> {
                           )
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
                 Padding(
@@ -170,6 +172,133 @@ class _MobileHomeState extends State<MobileHome> {
                       ],
                     ),
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 8
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'CONNECTION MODE',
+                        style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12
+                                ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
+                          child: SwitchListTile(
+                          title: Text(
+                            'CUSTOM SETUP',
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12
+                                ),
+                          ),
+                              value: _isSwitchedOn, 
+                              onChanged: (bool value){
+                                setState(() {
+                                  _isSwitchedOn = value;
+                                });
+                              },
+                              inactiveThumbColor: appBarColor,
+                              activeColor: drawerColor,
+                            ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: _isSwitchedOn == true ? 
+                  Column(
+                    children: [
+                      const ListTile(
+                        leading: Icon(Icons.rocket_launch_rounded, color: Colors.white,),
+                        title: Text(
+                          'Imported Config', 
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                        subtitle: Text(
+                          '.HAT File', 
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                        trailing: Icon(Icons.arrow_drop_down, color: Colors.white,),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: (){},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                'START',
+                                style: TextStyle(
+                                  color: Colors.black
+                                ),
+                              ),
+                            ],
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: drawerColor,
+                            elevation: 0,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                  : Column(
+                    children: [
+                      const ListTile(
+                            leading: Icon(Icons.rocket_launch_rounded, color: Colors.white,),
+                            title: Text(
+                              '[NGA][AIRTEL 48 MB/DAY}', 
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
+                            ),
+                            subtitle: Text(
+                              'nigeria', 
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
+                            ),
+                            trailing: Icon(Icons.arrow_drop_down, color: Colors.white,),
+                          ),
+                          Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: (){},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                'START',
+                                style: TextStyle(
+                                  color: Colors.black
+                                ),
+                              ),
+                            ],
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: drawerColor,
+                            elevation: 0,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                      
                 )
               ],
             ),
