@@ -115,20 +115,20 @@ class _MobileHomeState extends State<MobileHome> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Padding(
-                                padding: EdgeInsets.all(3),
+                                padding: const EdgeInsets.all(3),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: drawerColor,
                                     borderRadius: BorderRadius.circular(50)
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.download,
                                     color: Colors.white,
                                     size: 15,
                                   ),
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 '0.0KB',
                                 style: TextStyle(
                                   color: Colors.white
@@ -138,27 +138,27 @@ class _MobileHomeState extends State<MobileHome> {
                             ],
                           ),
                         ),
-                        SizedBox(width: 10,),
+                        const SizedBox(width: 10,),
                         Expanded(
                           flex: 6,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.all(3),
+                                padding: const EdgeInsets.all(3),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: drawerColor,
                                     borderRadius: BorderRadius.circular(50)
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.download,
                                     color: Colors.white,
                                     size: 15,
                                   ),
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 '0.0MB',
                                 style: TextStyle(
                                   color: Colors.white
@@ -181,7 +181,7 @@ class _MobileHomeState extends State<MobileHome> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'CONNECTION MODE',
                         style: TextStyle(
                                   color: Colors.grey,
@@ -193,7 +193,7 @@ class _MobileHomeState extends State<MobileHome> {
                         child: Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
                           child: SwitchListTile(
-                          title: Text(
+                          title: const Text(
                             'CUSTOM SETUP',
                               style: TextStyle(
                                   color: Colors.grey,
