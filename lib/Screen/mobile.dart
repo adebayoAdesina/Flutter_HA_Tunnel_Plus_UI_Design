@@ -1,37 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:ha_tunnel_plus_ui_design/Views/Mobile/mobile_home.dart';
 import 'package:ha_tunnel_plus_ui_design/Views/Mobile/mobile_log.dart';
 import 'package:ha_tunnel_plus_ui_design/Widget/info.dart';
 
 import '../Color/colors.dart';
+import '../Widget/identification.dart';
+import 'about.dart';
+import 'server_apps.dart';
+import 'settings.dart';
 
-class Mobile extends StatelessWidget {
+class Mobile extends StatefulWidget {
   const Mobile({Key? key}) : super(key: key);
 
   @override
+  State<Mobile> createState() => _MobileState();
+}
+
+class _MobileState extends State<Mobile> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _showGithubDialog());
+  }
+
+  void _openSettings() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const SettingsPage()),
+    );
+  }
+
+  void _showGithubDialog() {
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(),
+        title: const Text('Follow Me On GitHub?'),
+        content: const Text(
+          'I share the source code, updates and new projects on GitHub.\n\n'
+          'Would you like to follow me there?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('LATER', style: TextStyle(color: drawerColor)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              launchUrl(Uri.parse(githubUrl),
+                  mode: LaunchMode.externalApplication);
+            },
+            child:
+                const Text('YES PLEASE', style: TextStyle(color: drawerColor)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final light = Theme.of(context).brightness == Brightness.light;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.black,
         appBar: AppBar(
-          backgroundColor: appBarColor,
+          backgroundColor: light ? drawerColor : appBarColor,
           title: Text(
             'HA Tunnel Plus',
             style: TextStyle(
-              color: iconColor.withOpacity(0.8),
+              color: light ? iconColor : iconColor.withValues(alpha: 0.8),
             ),
           ),
           actions: [
             IconButton(
-              onPressed: (){}, 
+              onPressed: _openSettings,
               icon: const Icon(Icons.settings),
-              color: iconColor.withOpacity(0.8),
+              color: light ? iconColor : iconColor.withValues(alpha: 0.8),
             ),
     
             PopupMenuButton(
               color: appBarColor,
-              icon: Icon(Icons.more_vert, color: iconColor.withOpacity(0.8),),
+              icon: Icon(Icons.more_vert, color: light ? iconColor : iconColor.withValues(alpha: 0.8),),
               itemBuilder: (context)=> [
 
                 PopupMenuItem(
@@ -46,7 +99,7 @@ class Mobile extends StatelessWidget {
                       ),),
                       Icon(
                       Icons.arrow_right_outlined,
-                      color: iconColor.withOpacity(0.8),
+                      color: iconColor.withValues(alpha: 0.8),
                     ),
                     
                     ],
@@ -108,22 +161,31 @@ class Mobile extends StatelessWidget {
             )
           ],
           
-          bottom: TabBar(
-            indicatorWeight: 3,
-            indicatorColor: drawerColor,
-            labelColor: drawerColor,
-            unselectedLabelColor: iconColor.withOpacity(0.6),
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.w400
-            ),
-            tabs: const [
-              Tab(
-                text: 'HOME',
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(kTextTabBarHeight),
+            child: ColoredBox(
+              color: light ? Colors.white : appBarColor,
+              child: TabBar(
+                indicatorWeight: 3,
+                indicatorColor: drawerColor,
+                indicatorSize: TabBarIndicatorSize.tab,
+                dividerColor: Colors.transparent,
+                labelColor: drawerColor,
+                unselectedLabelColor:
+                    light ? Colors.black54 : iconColor.withValues(alpha: 0.6),
+                labelStyle: const TextStyle(
+                  fontWeight: FontWeight.w400
+                ),
+                tabs: const [
+                  Tab(
+                    text: 'HOME',
+                  ),
+                  Tab(
+                    text: 'LOG',
+                  )
+                ],
               ),
-              Tab(
-                text: 'LOG',
-              )
-            ],
+            ),
           ),
         ),
         drawer: Drawer(
@@ -176,17 +238,21 @@ class Mobile extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  color: iconColor.withOpacity(0.3),
+                  color: iconColor.withValues(alpha: 0.3),
                   thickness: 1,
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    leading: Icon(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      showIdentificationDialog(context);
+                    },
+                    leading: const Icon(
                       Icons.fingerprint,
                       color: iconColor,
                     ),
-                    title: Text(
+                    title: const Text(
                       'Identification',
                       style: TextStyle(
                         color: iconColor,
@@ -196,7 +262,7 @@ class Mobile extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  color: iconColor.withOpacity(0.3),
+                  color: iconColor.withValues(alpha: 0.3),
                   thickness: 1,
                 ),
                 const Padding(
@@ -232,17 +298,21 @@ class Mobile extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  color: iconColor.withOpacity(0.3),
+                  color: iconColor.withValues(alpha: 0.3),
                   thickness: 1,
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    leading: Icon(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      _openSettings();
+                    },
+                    leading: const Icon(
                       Icons.settings,
                       color: iconColor,
                     ),
-                    title: Text(
+                    title: const Text(
                       'Settings',
                       style: TextStyle(
                         color: iconColor,
@@ -251,14 +321,22 @@ class Mobile extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    leading: Icon(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const ServerAppsPage(),
+                        ),
+                      );
+                    },
+                    leading: const Icon(
                       Icons.apps_rounded,
                       color: iconColor,
                     ),
-                    title: Text(
+                    title: const Text(
                       'Server Apps',
                       style: TextStyle(
                         color: iconColor,
@@ -268,7 +346,7 @@ class Mobile extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  color: iconColor.withOpacity(0.3),
+                  color: iconColor.withValues(alpha: 0.3),
                   thickness: 1,
                 ),
                 const Padding(
@@ -288,14 +366,20 @@ class Mobile extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    leading: Icon(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const AboutPage()),
+                      );
+                    },
+                    leading: const Icon(
                       Icons.info_rounded,
                       color: iconColor,
                     ),
-                    title: Text(
+                    title: const Text(
                       'About',
                       style: TextStyle(
                         color: iconColor,
@@ -305,7 +389,7 @@ class Mobile extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  color: iconColor.withOpacity(0.3),
+                  color: iconColor.withValues(alpha: 0.3),
                   thickness: 1,
                 ),
                 const Padding(
@@ -326,7 +410,7 @@ class Mobile extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  color: iconColor.withOpacity(0.3),
+                  color: iconColor.withValues(alpha: 0.3),
                   thickness: 1,
                 ),
                 const Padding(
