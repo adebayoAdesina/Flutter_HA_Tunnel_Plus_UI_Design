@@ -14,12 +14,26 @@ class _MobileHomeState extends State<MobileHome> {
   
   @override
   Widget build(BuildContext context) {
+    final light = Theme.of(context).brightness == Brightness.light;
+    final textColor = light ? Colors.black87 : Colors.white.withValues(alpha: 0.9);
+    final startTextColor = light ? Colors.white : Colors.black;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           Container(
-            color: backGroundColor,
+            decoration: BoxDecoration(
+              color: light ? Colors.white : backGroundColor,
+              boxShadow: light
+                  ? [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.15),
+                        blurRadius: 4,
+                        offset: const Offset(0, 1),
+                      ),
+                    ]
+                  : null,
+            ),
             child: Column(
               children: [
                 Row(
@@ -51,13 +65,13 @@ class _MobileHomeState extends State<MobileHome> {
                             title: Text(
                               'Random Server',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.9),
+                                color: textColor,
                               ),
                             ),
                             subtitle: Text(
                               'Any Location',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.9),
+                                color: textColor,
                               ),
                             ),
                             trailing: const Icon(
@@ -85,13 +99,13 @@ class _MobileHomeState extends State<MobileHome> {
                             title: Text(
                               'AUTO',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.9),
+                                color: textColor,
                               ),
                             ),
                           
                             trailing: Icon(
                               Icons.arrow_drop_down,
-                              color: Colors.white.withOpacity(0.9),
+                              color: textColor,
                             ),
                           )
                         ],
@@ -103,7 +117,8 @@ class _MobileHomeState extends State<MobileHome> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: light ? const Color(0xFFF5F5F5) : Colors.black,
+                      border: light ? Border.all(color: Colors.black12) : null,
                       borderRadius: BorderRadius.circular(10)
                     ),
                     child: Row(
@@ -128,10 +143,10 @@ class _MobileHomeState extends State<MobileHome> {
                                   ),
                                 ),
                               ),
-                              const Text(
+                              Text(
                                 '0.0KB',
                                 style: TextStyle(
-                                  color: Colors.white
+                                  color: textColor
                                 ),
                                 textAlign: TextAlign.end,
                               ),
@@ -158,10 +173,10 @@ class _MobileHomeState extends State<MobileHome> {
                                   ),
                                 ),
                               ),
-                              const Text(
+                              Text(
                                 '0.0MB',
                                 style: TextStyle(
-                                  color: Colors.white
+                                  color: textColor
                                 ),
                                 textAlign: TextAlign.end,
                               ),
@@ -207,7 +222,7 @@ class _MobileHomeState extends State<MobileHome> {
                                 });
                               },
                               inactiveThumbColor: appBarColor,
-                              activeColor: drawerColor,
+                              activeThumbColor: drawerColor,
                             ),
                         ),
                       ),
@@ -218,21 +233,21 @@ class _MobileHomeState extends State<MobileHome> {
                   child: _isSwitchedOn == true ? 
                   Column(
                     children: [
-                      const ListTile(
-                        leading: Icon(Icons.rocket_launch_rounded, color: Colors.white,),
+                      ListTile(
+                        leading: Icon(Icons.rocket_launch_rounded, color: textColor,),
                         title: Text(
                           'Imported Config', 
                           style: TextStyle(
-                            color: Colors.white
+                            color: textColor
                           ),
                         ),
                         subtitle: Text(
                           '.HAT File', 
                           style: TextStyle(
-                            color: Colors.white
+                            color: textColor
                           ),
                         ),
-                        trailing: Icon(Icons.arrow_drop_down, color: Colors.white,),
+                        trailing: Icon(Icons.arrow_drop_down, color: textColor,),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -240,17 +255,17 @@ class _MobileHomeState extends State<MobileHome> {
                           onPressed: (){},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
                                 'START',
                                 style: TextStyle(
-                                  color: Colors.black
+                                  color: startTextColor
                                 ),
                               ),
                             ],
                           ),
                           style: ElevatedButton.styleFrom(
-                            primary: drawerColor,
+                            backgroundColor: drawerColor,
                             elevation: 0,
                           ),
                         ),
@@ -259,21 +274,21 @@ class _MobileHomeState extends State<MobileHome> {
                   )
                   : Column(
                     children: [
-                      const ListTile(
-                            leading: Icon(Icons.rocket_launch_rounded, color: Colors.white,),
+                      ListTile(
+                            leading: Icon(Icons.rocket_launch_rounded, color: textColor,),
                             title: Text(
                               '[NGA][AIRTEL 48 MB/DAY}', 
                               style: TextStyle(
-                                color: Colors.white
+                                color: textColor
                               ),
                             ),
                             subtitle: Text(
                               'nigeria', 
                               style: TextStyle(
-                                color: Colors.white
+                                color: textColor
                               ),
                             ),
-                            trailing: Icon(Icons.arrow_drop_down, color: Colors.white,),
+                            trailing: Icon(Icons.arrow_drop_down, color: textColor,),
                           ),
                           Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -281,17 +296,17 @@ class _MobileHomeState extends State<MobileHome> {
                           onPressed: (){},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
                                 'START',
                                 style: TextStyle(
-                                  color: Colors.black
+                                  color: startTextColor
                                 ),
                               ),
                             ],
                           ),
                           style: ElevatedButton.styleFrom(
-                            primary: drawerColor,
+                            backgroundColor: drawerColor,
                             elevation: 0,
                           ),
                         ),
